@@ -1,0 +1,492 @@
+%\documentclass[12pt]{scrartcl}
+%\usepackage[utf8]{inputenc}		% bei der Verw. von lualatex oder xelatex entfernen!
+%\usepackage[ruled]{algorithm}
+%\usepackage{mathtools}
+%\usepackage{tikz}
+%\usepackage{rotating}
+%\usetikzlibrary{calc,shapes.geometric, positioning,backgrounds, arrows.meta, chains, plotmarks, fit, arrows}
+%\usetikzlibrary{decorations.pathreplacing}
+%\usetikzlibrary{intersections}
+%
+%\usepackage{textcomp}
+%\usepackage{enumitem}
+%
+%\setlength{\abovedisplayskip}{3pt}
+%\setlength{\belowdisplayskip}{3pt}
+%
+%\definecolor{grey}{HTML}{F2F2F2}
+%\definecolor{greyDark}{HTML}{E1E1E1}
+%\begin{document}
+%\begin{figure}
+%\centering
+%\caption{}
+\begin{tikzpicture}[scale=0.54, every node/.style={transform shape}]
+
+\dimendef\prevdepth=0
+
+\tikzset{half paths/.style 2 args={%
+  decoration={show path construction,
+    lineto code={
+      \draw [#1] (\tikzinputsegmentfirst) -- 
+         ($(\tikzinputsegmentfirst)!0.5!(\tikzinputsegmentlast)$);
+      \draw [#2] ($(\tikzinputsegmentfirst)!0.5!(\tikzinputsegmentlast)$)
+        -- (\tikzinputsegmentlast);
+    }
+  }, decorate
+}}
+
+\tikzset{
+	smallarrow/.style={-{stealth[width=1pt]}}
+}
+
+\tikzset{
+    myarrow/.style={-{stealth}, semithick},
+    myarrowdashed/.style={semithick, dashed},
+    myline/.style={semithick},
+    triangle/.style = {draw, regular polygon, regular polygon sides=3, inner sep=0pt, minimum height=130},
+    node rotated/.style = {rotate=180},
+    border rotated/.style = {shape border rotate=180},
+     pre/.style={<-,shorten <=1pt,>=stealth',semithick},
+     post/.style={->,shorten >=1pt,>=stealth',semithick}
+}
+
+\tikzset{XOR/.style={draw,circle,append after command={
+        [shorten >=\pgflinewidth, shorten <=\pgflinewidth, semithick,]
+        (\tikzlastnode.north) edge (\tikzlastnode.south)
+        (\tikzlastnode.east) edge (\tikzlastnode.west)
+        }
+    }
+}
+
+\tikzset{BOXPLUS/.style={draw,rectangle, inner sep=6pt,append after command={
+        [shorten >=\pgflinewidth, shorten <=\pgflinewidth, semithick,]
+        (\tikzlastnode.north) edge (\tikzlastnode.south)
+        (\tikzlastnode.east) edge (\tikzlastnode.west)
+        }
+    }
+} 
+
+
+\pgfmathsetmacro{\D}{10}
+\pgfmathsetmacro{\W}{120}
+\pgfmathsetmacro{\H}{60}
+\pgfmathsetmacro{\A}{50}
+ 
+%******************** 
+   % Beginning of drawing
+%********************
+
+%ANCHOR TOP
+\node [draw, fill=gray, minimum width=\W pt] (kBlock) {Klartext-Block};
+
+%EINGANGSPERMUTATION
+\node [draw, fill=gray, minimum width=\W - 20 pt, below=\D pt of kBlock, align=center] (ip) {\small Eingangs- \\ \small permutation};
+
+
+%BEGIN ROUND 1 BOX
+\node [fill=grey, below=\D pt of ip.south, anchor=north, minimum width=\W pt, minimum height=\H pt](round1Block) {};
+
+
+
+%ANCHOR TOP LEFT
+\path let \p0 = ($ (kBlock.south west)!0.20!(kBlock.south east) $)
+	in node [] (kanch1) at (\p0) {};
+
+%ANCHOR TOP RIGHT	
+\path let \p0 = ($ (kBlock.south west)!0.80!(kBlock.south east) $)
+	in node [] (kanch2) at (\p0) {};
+	
+
+%ANCHOR TOP LEFT
+\path let
+	\p0	= (kanch1),
+	\p1 = ($ (ip.north west)!0.20!(ip.north east) $)
+	in node [] (ip1north) at (\x0, \y1) {};
+
+%ANCHOR TOP RIGHT	
+\path let
+	\p0	= (kanch2),
+	\p1 = ($ (ip.north west)!0.20!(ip.north east) $)
+	in node [] (ip2north) at (\x0, \y1) {};
+
+%ANCHOR TOP LEFT
+\path let
+	\p0	= (kanch1),
+	\p1 = ($ (ip.south west)!0.20!(ip.south east) $)
+	in node [] (ip1south) at (\x0, \y1) {};
+
+%ANCHOR TOP RIGHT	
+\path let
+	\p0	= (kanch2),
+	\p1 = ($ (ip.south west)!0.20!(ip.south east) $)
+	in node [] (ip2south) at (\x0, \y1) {};
+
+
+
+
+% F1
+\path let \p0 = ($ (round1Block.south)!0.50!(round1Block.north) $)
+	in node [draw] (f1) at (\p0) {\small $f$};
+% XOR ROUND 1
+\path let
+	\p0 = (kanch1),
+	\p1 = (f1)
+	in node [XOR] (r1fconleft) at (\x0 ,\y1) {};
+	
+
+	
+	
+%ROUND KEY
+\path let
+	\p0 = (f1),
+	\p1 = ($ (round1Block.south)!0.90!(round1Block.north) $)
+	in node [] (roundK1) at (\x0 ,\y1) {\scriptsize Rundenschlüssel};
+
+%Point before twist LEFT
+\path let
+	\p0 = (r1fconleft),
+	\p1 = ($ (round1Block.south)!0.30!(round1Block.north) $)
+	in node [] (r1conleft) at (\x0 ,\y1) {};
+
+% BRANCH ABOVE RIGHT LINE
+\path let
+	\p0 = (kanch2),
+	\p1 = (f1)
+	in node [] (r1fconright) at (\x0 ,\y1) {};	
+	
+% DESCRIPTION
+\path let
+	\p0 = ($ (r1fconright.center)!0.50!(round1Block.east) $),
+	\p1 = (f1)
+	in node [rotate=90] (descr) at (\x0 ,\y1) {\small Runde 1};
+
+%Point before twist LEFT
+\path let
+	\p0 = (kanch2),
+	\p1 = ($ (round1Block.south)!0.30!(round1Block.north) $)
+	in node [] (r1conright) at (\x0 ,\y1) {};
+	
+%TWISTER
+\path let
+	\p0 = (r1fconleft),
+	\p1 = (round1Block.south)
+	in node [] (r1twistleft) at (\x0 ,\y1) {};
+	
+\path let
+	\p0 = (r1fconright),
+	\p1 = (round1Block.south)
+	in node [] (r1twistright) at (\x0 ,\y1) {};
+	
+%%% DRAW LINES ROUND 1
+\draw[myarrow] (kanch1.center) -- (ip1north.center);
+\draw[myarrow] (kanch2.center) -- (ip2north.center);
+\draw[myarrow] (ip1south.center) -- (r1fconleft.north);
+\draw[myline] (ip2south.center) -- (r1fconright.center);
+\draw[myarrow] (r1fconright.center) -- (f1.east);
+\draw[myarrow] (f1.west) -- (r1fconleft.east);
+\draw[myline] (r1fconleft.south) -- (r1conleft.center);
+\draw[myline] (r1fconright.center) -- (r1conright.center);
+\draw[myline] (r1conleft.center) -- (r1twistright.center);
+\draw[myline] (r1conright.center) -- (r1twistleft.center);
+\draw[myarrow] (roundK1) -- (f1.north);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%BEGIN ROUND 2 BOX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\node [fill=greyDark, below=\D pt of round1Block.south, anchor=north, minimum width=\W pt, minimum height=\H pt](round2Block) {};
+
+%ANCHOR TOP LEFT
+\path let \p0 = ($ (round2Block.north west)!0.20!(round2Block.north east) $)
+	in node [] (r2kanch1) at (\p0) {};
+
+%ANCHOR TOP RIGHT	
+\path let \p0 = ($ (round2Block.north west)!0.80!(round2Block.north east) $)
+	in node [] (r2kanch2) at (\p0) {};
+
+
+% F2
+\path let \p0 = ($ (round2Block.south)!0.50!(round2Block.north) $)
+	in node [draw] (f2) at (\p0) {\small $f$};
+% XOR ROUND 1
+\path let
+	\p0 = (kanch1),
+	\p1 = (f2)
+	in node [XOR] (r2fconleft) at (\x0 ,\y1) {};
+	
+%ROUND KEY
+\path let
+	\p0 = (f2),
+	\p1 = ($ (round2Block.south)!0.90!(round2Block.north) $)
+	in node [] (roundK2) at (\x0 ,\y1) {\scriptsize Rundenschlüssel};
+
+% DESCRIPTION
+\path let
+	\p0 = ($ (r1fconright.center)!0.50!(round1Block.east) $),
+	\p1 = (f2)
+	in node [rotate=90] (descr) at (\x0 ,\y1) {\small Runde 2};
+
+%Point before twist LEFT
+\path let
+	\p0 = (r2fconleft),
+	\p1 = ($ (round2Block.south)!0.30!(round2Block.north) $)
+	in node [] (r2conleft) at (\x0 ,\y1) {};
+
+% BRANCH ABOVE RIGHT LINE
+\path let
+	\p0 = (kanch2),
+	\p1 = (f2)
+	in node [] (r2fconright) at (\x0 ,\y1) {};	
+
+%Point before twist LEFT
+\path let
+	\p0 = (kanch2),
+	\p1 = ($ (round2Block.south)!0.30!(round2Block.north) $)
+	in node [] (r2conright) at (\x0 ,\y1) {};
+	
+%TWISTER
+\path let
+	\p0 = (r2fconleft),
+	\p1 = (round2Block.south)
+	in node [] (r2twistleft) at (\x0 ,\y1) {};
+	
+\path let
+	\p0 = (r1fconright),
+	\p1 = (round2Block.south)
+	in node [] (r2twistright) at (\x0 ,\y1) {};
+	
+	
+%DASHED%
+\draw[myline] (r1twistleft.center) -- (r2kanch1.center);
+\draw[myline] (r1twistright.center) -- (r2kanch2.center);
+
+%%% DRAW LINES ROUND 2
+\draw[myarrow] (r2kanch1.center) -- (r2fconleft.north);
+\draw[myline] (r2kanch2.center) -- (r2fconright.center);
+\draw[myarrow] (r2fconright.center) -- (f2.east);
+\draw[myarrow] (f2.west) -- (r2fconleft.east);
+\draw[myline] (r2fconleft.south) -- (r2conleft.center);
+\draw[myline] (r2fconright.center) -- (r2conright.center);
+\draw[myline] (r2conleft.center) -- (r2twistright.center);
+\draw[myline] (r2conright.center) -- (r2twistleft.center);
+\draw[myarrow] (roundK2) -- (f2.north);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%BEGIN ROUND 3 BOX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\node [fill=greyDark, below=\D * 2 pt of round2Block.south, anchor=north, minimum width=\W pt, minimum height=\H pt](round3Block) {};
+
+%ANCHOR TOP LEFT
+\path let \p0 = ($ (round3Block.north west)!0.20!(round3Block.north east) $)
+	in node [] (r3kanch1) at (\p0) {};
+
+%ANCHOR TOP RIGHT	
+\path let \p0 = ($ (round3Block.north west)!0.80!(round3Block.north east) $)
+	in node [] (r3kanch2) at (\p0) {};
+
+
+% F2
+\path let \p0 = ($ (round3Block.south)!0.50!(round3Block.north) $)
+	in node [draw] (f3) at (\p0) {\small $f$};
+% XOR ROUND 1
+\path let
+	\p0 = (kanch1),
+	\p1 = (f3)
+	in node [XOR] (r3fconleft) at (\x0 ,\y1) {};
+	
+%ROUND KEY
+\path let
+	\p0 = (f3),
+	\p1 = ($ (round3Block.south)!0.90!(round3Block.north) $)
+	in node [] (roundK3) at (\x0 ,\y1) {\scriptsize Rundenschlüssel};
+
+% DESCRIPTION
+\path let
+	\p0 = ($ (r1fconright.center)!0.50!(round1Block.east) $),
+	\p1 = (f3)
+	in node [rotate=90] (descr) at (\x0 ,\y1) {\small Runde 15};
+
+%Point before twist LEFT
+\path let
+	\p0 = (r3fconleft),
+	\p1 = ($ (round3Block.south)!0.30!(round3Block.north) $)
+	in node [] (r3conleft) at (\x0 ,\y1) {};
+
+% BRANCH ABOVE RIGHT LINE
+\path let
+	\p0 = (kanch2),
+	\p1 = (f3)
+	in node [] (r3fconright) at (\x0 ,\y1) {};	
+
+\path let
+	\p0 = (kanch2),
+	\p1 = ($ (round3Block.south)!0.30!(round3Block.north) $)
+	in node [] (r3conright) at (\x0 ,\y1) {};
+	
+%TWISTER
+\path let
+	\p0 = (r3fconleft),
+	\p1 = (round3Block.south)
+	in node [] (r3twistleft) at (\x0 ,\y1) {};
+	
+\path let
+	\p0 = (r3fconright),
+	\p1 = (round3Block.south)
+	in node [] (r3twistright) at (\x0 ,\y1) {};
+	
+	
+%DASHED%
+%\draw[myarrowdashed] (r1twistleft) -- (r2kanch1.center);
+%\draw[myarrowdashed] (r1twistright) -- (r2kanch2.center);
+
+%%% DRAW LINES ROUND 3
+\draw[myarrow] (r3kanch1.center) -- (r3fconleft.north);
+\draw[myline] (r3kanch2.center) -- (r3fconright.center);
+\draw[myarrow] (r3fconright.center) -- (f3.east);
+\draw[myarrow] (f3.west) -- (r3fconleft.east);
+\draw[myline] (r3fconleft.south) -- (r3conleft.center);
+\draw[myline] (r3fconright.center) -- (r3conright.center);
+\draw[myline] (r3conleft.center) -- (r3twistright.center);
+\draw[myline] (r3conright.center) -- (r3twistleft.center);
+\draw[myarrow] (roundK3) -- (f3.north);
+
+
+
+%%DASHED LINES
+\draw[myarrowdashed] (r2twistleft.center) -- (r3kanch1.center);
+\draw[myarrowdashed] (r2twistright.center) -- (r3kanch2.center);
+%\draw[myline] (boxplus1.south) -- (r3kanch1.center);
+%\draw[myline] (boxplus2.south) -- (r3kanch2.center);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%BEGIN ROUND 4 BOX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\node [fill=greyDark, below=\D pt of round3Block.south, anchor=north, minimum width=\W pt, minimum height=\H pt](round4Block) {};
+
+%ANCHOR TOP LEFT
+\path let \p0 = ($ (round4Block.north west)!0.20!(round4Block.north east) $)
+	in node [] (r4kanch1) at (\p0) {};
+
+%ANCHOR TOP RIGHT	
+\path let \p0 = ($ (round4Block.north west)!0.80!(round4Block.north east) $)
+	in node [] (r4kanch2) at (\p0) {};
+
+
+% F2
+\path let \p0 = ($ (round4Block.south)!0.50!(round4Block.north) $)
+	in node [draw] (f4) at (\p0) {\small $f$};
+% XOR ROUND 1
+\path let
+	\p0 = (kanch1),
+	\p1 = (f4)
+	in node [XOR] (r4fconleft) at (\x0 ,\y1) {};
+	
+%ROUND KEY
+\path let
+	\p0 = (f4),
+	\p1 = ($ (round4Block.south)!0.90!(round4Block.north) $)
+	in node [] (roundK4) at (\x0 ,\y1) {\scriptsize Rundenschlüssel};
+	
+
+% DESCRIPTION
+\path let
+	\p0 = ($ (r1fconright.center)!0.50!(round1Block.east) $),
+	\p1 = (f4)
+	in node [rotate=90] (descr) at (\x0 ,\y1) {\small Runde 16};
+
+%Point before twist LEFT
+\path let
+	\p0 = (r4fconleft),
+	\p1 = ($ (round4Block.south)!0.30!(round4Block.north) $)
+	in node [] (r4conleft) at (\x0 ,\y1) {};
+
+% BRANCH ABOVE RIGHT LINE
+\path let
+	\p0 = (kanch2),
+	\p1 = (f4)
+	in node [] (r4fconright) at (\x0 ,\y1) {};	
+
+\path let
+	\p0 = (kanch2),
+	\p1 = ($ (round4Block.south)!0.30!(round4Block.north) $)
+	in node [] (r4conright) at (\x0 ,\y1) {};
+	
+%TWISTER
+\path let
+	\p0 = (r4fconleft),
+	\p1 = (round4Block.south)
+	in node [] (r4twistleft) at (\x0 ,\y1) {};
+	
+\path let
+	\p0 = (r4fconright),
+	\p1 = (round4Block.south)
+	in node [] (r4twistright) at (\x0 ,\y1) {};
+	
+	
+%DASHED%
+\draw[myline] (r3twistleft.center) -- (r4kanch1.center);
+\draw[myline] (r3twistright.center) -- (r4kanch2.center);
+
+%%% DRAW LINES ROUND 2
+\draw[myarrow] (r4kanch1.center) -- (r4fconleft.north);
+\draw[myline] (r4kanch2.center) -- (r4fconright.center);
+\draw[myarrow] (r4fconright.center) -- (f4.east);
+\draw[myarrow] (f4.west) -- (r4fconleft.east);
+\draw[myline] (r4fconleft.south) -- (r4conleft.center);
+\draw[myline] (r4fconright.center) -- (r4conright.center);
+\draw[myline] (r4conleft.center) -- (r4twistright.center);
+\draw[myline] (r4conright.center) -- (r4twistleft.center);
+\draw[myarrow] (roundK4) -- (f4.north);
+
+
+%FINAL PERMUTATION
+\node [draw, fill=gray, minimum width=\W - 20 pt, below=\D pt of round4Block, align=center] (fp) {\small Ausgangs- \\ \small permutation};
+
+%ANCHOR BOTTOM
+\node [draw, fill=gray, minimum width=\W pt, below=\D pt of fp.south, anchor=north] (cBlock) {Chiffrat-Block};
+
+%ANCHOR TOP LEFT
+\path let
+	\p0	= (kanch1),
+	\p1 = ($ (fp.north west)!0.20!(fp.north east) $)
+	in node [] (fp1north) at (\x0, \y1) {};
+
+%ANCHOR TOP RIGHT	
+\path let
+	\p0	= (kanch2),
+	\p1 = ($ (fp.north west)!0.20!(fp.north east) $)
+	in node [] (fp2north) at (\x0, \y1) {};
+
+%ANCHOR TOP LEFT
+\path let
+	\p0	= (kanch1),
+	\p1 = ($ (fp.south west)!0.20!(fp.south east) $)
+	in node [] (fp1south) at (\x0, \y1) {};
+
+%ANCHOR TOP RIGHT	
+\path let
+	\p0	= (kanch2),
+	\p1 = ($ (fp.south west)!0.20!(fp.south east) $)
+	in node [] (fp2south) at (\x0, \y1) {};
+
+
+
+\path let \p0 = ($ (cBlock.north west)!0.20!(cBlock.north east) $)
+	in node [] (r5kanch1) at (\p0) {};
+
+%ANCHOR TOP RIGHT	
+\path let \p0 = ($ (cBlock.north west)!0.80!(cBlock.north east) $)
+	in node [] (r5kanch2) at (\p0) {};
+
+\draw[myarrow] (r4twistleft.center) -- (fp1north.center);
+\draw[myarrow] (r4twistright.center) -- (fp2north.center);
+	
+\draw[myarrow] (fp1south.center) -- (r5kanch1.center);
+\draw[myarrow] (fp2south.center) -- (r5kanch2.center);
+
+
+\end{tikzpicture}
+%\end{figure}
+%\end{document}

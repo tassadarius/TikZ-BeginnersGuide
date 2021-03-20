@@ -1,0 +1,349 @@
+\begin{tikzpicture}[scale=0.30, every node/.style={transform shape}]
+
+\dimendef\prevdepth=0
+
+\tikzset{half paths/.style 2 args={%
+  decoration={show path construction,
+    lineto code={
+      \draw [#1] (\tikzinputsegmentfirst) -- 
+         ($(\tikzinputsegmentfirst)!0.5!(\tikzinputsegmentlast)$);
+      \draw [#2] ($(\tikzinputsegmentfirst)!0.5!(\tikzinputsegmentlast)$)
+        -- (\tikzinputsegmentlast);
+    }
+  }, decorate
+}}
+    
+\tikzset{
+    %myarrow/.style={->, shorten >=2pt, semithick},
+	myarrow/.style={-{stealth}, semithick},
+    myline/.style={semithick},
+    triangle/.style = {draw, regular polygon, regular polygon sides=3, inner sep=0pt, minimum height=130},
+    node rotated/.style = {rotate=180},
+    border rotated/.style = {shape border rotate=180},
+     pre/.style={<-,shorten <=1pt,>=stealth',semithick},
+     post/.style={->,shorten >=1pt,>=stealth',semithick}
+}
+
+\tikzset{XOR/.style={draw,circle,append after command={
+        [shorten >=\pgflinewidth, shorten <=\pgflinewidth, semithick,]
+        (\tikzlastnode.north) edge (\tikzlastnode.south)
+        (\tikzlastnode.east) edge (\tikzlastnode.west)
+        }
+    }
+} 
+    
+\pgfmathsetmacro{\S}{8}
+\pgfmathsetmacro{\M}{135}
+
+ 
+%******************** 
+   %P - D
+%********************
+	
+	\node [draw, minimum width=700pt, minimum height=35pt, fill=white, text height=-3pt] (U) {U$_{1,...,36}$};
+	\node [draw, minimum width=600pt,minimum height=40pt, above=30pt of U] (P) {P};
+
+	
+%Lines	
+%	\foreach \i in {0,...,3} {
+%		
+%		\draw [myarrow] ([xshift=\i * \S - \M]P.south) -- ([xshift=\i * \S - \M]U.north);
+%	}
+
+ 
+%******************** 
+   %Z-Funktionen
+%********************
+
+%\draw [black,dashed] (-15,11) rectangle (2,6) node [black,below] {U};
+
+
+
+%NOTE OUT OF ORDER
+\begin{scope}[start chain, node distance=70pt] 
+\node[triangle, border rotated, on chain] (Z4) at ($ (P.west) + (65pt,-147.5pt) $) {Z$_{4}$};
+\node[triangle, border rotated, on chain] (Z3) {Z$_{3}$};% at ($ (Z4.east) + (4,0) $) {Z$_{3}$};
+\node[triangle, border rotated, on chain] (Z2) {Z$_{2}$};% at ($ (Z1.west) + (-3.2,0) $) {Z$_{2}$};
+\node[triangle, border rotated, on chain] (Z1) {Z$_{1}$};%;at (P.west) {Z};%($ (P.east) + (-65pt,-6) $) {Z$_{1}$} ;
+\end{scope}
+
+\begin{scope}[on background layer]
+\pgfmathsetmacro{\AS}{19} % arrow-spacing: spacing between lines horizontally
+\pgfmathsetmacro{\AO}{8}  % arrow-offset: offset from center of Z anchor
+\pgfmathsetmacro{\AP}{0}  % arrow-p: height of P description
+\pgfmathsetmacro{\AU}{-14}% arrow-u: height of U description
+\pgfmathsetmacro{\AM}{49}% arrow-m: height of middle descriptions (without Z function)
+% Z4 %
+
+\path
+  let \p0 = (Z4.north west),
+      \p1 = (U.south west),
+      \p2 = ($ (\p0)!0.5!(\p1) + (0,0) $)
+  in
+node [draw=none] (S2) at (\x1, \y2) {\scriptsize  S$_{2/n}$};
+
+\draw [myarrow] (S2)-|([xshift=-2 * \AS - \AO]Z4.north);
+\draw [myarrow] ([xshift=-1 * \AS - \AO]Z4.north|-P.south) -- ([xshift=-1 * \AS - \AO]Z4.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{1}$}
+	node [midway, above=\AU pt] (P0) {};
+\draw [myarrow] ([xshift=0 * \AS - \AO]Z4.north|-P.south) -- ([xshift=0 * \AS - \AO]Z4.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{2}$}
+	node [midway, above=\AU pt] (P1) {};
+\path [half paths={dashed, myarrow}{solid, myarrow}] ([xshift=0 * \AS + \AO]Z4.north|-P.south)--([xshift=0 * \AS + \AO]Z4.north)
+	node [midway, above=\AU pt] (P2) {};
+\draw [myarrow] ([xshift=1 * \AS + \AO]Z4.north|-P.south) -- ([xshift=1 * \AS + \AO]Z4.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{4}$}
+	node [midway, above=\AU pt] (P3) {};
+\draw [myarrow] ([xshift=2 * \AS + \AO]Z4.north|-P.south) -- ([xshift=2 * \AS + \AO]Z4.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{5}$}
+	node [midway, above=\AU pt] (P4) {};
+	
+% In Between A5 %
+\path
+  let \p0 = (Z4.east),
+      \p1 = (Z3.west),
+      \p2 = ($ (\p0)!.5!(\p1) + (0,-3.5) $)
+  in
+node [XOR] (A5) at (\p2) {};
+\draw [myline, name path=firstline] (A5|-P.south) -- (A5)
+	node[at start, above=\AP pt] {\scriptsize  P$_{6}$}
+	node [midway, above=\AM pt] (P5) {};
+
+% Z3 %
+\path [half paths={dashed, myarrow}{solid, myarrow}] ([xshift=-2 * \AS - \AO]Z3.north|-P.south)--([xshift=-2 * \AS - \AO]Z3.north)
+	node [midway, above=\AU pt] (P6) {};
+\draw [myarrow] ([xshift=-1 * \AS - \AO]Z3.north|-P.south) -- ([xshift=-1 * \AS - \AO]Z3.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{8}$}
+	node [midway, above=\AU pt] (P7) {};
+\path [half paths={dashed, myarrow}{solid, myarrow}] ([xshift=0 * \AS - \AO]Z3.north|-P.south) -- ([xshift=0 * \AS - \AO]Z3.north)
+	%node[at start, above=\AP pt] {\scriptsize  P$_{9}$}
+	node [midway, above=\AU pt] (P8) {};
+\draw [myarrow] ([xshift=0 * \AS + \AO]Z3.north|-P.south) -- ([xshift=0 * \AS + \AO]Z3.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{10}$}
+	node [midway, above=\AU pt] (P9) {};
+\draw [myarrow] ([xshift=1 * \AS + \AO]Z3.north|-P.south) -- ([xshift=1 * \AS + \AO]Z3.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{11}$}
+	node [midway, above=\AU pt] (P10) {};
+\draw [myarrow] ([xshift=2 * \AS + \AO]Z3.north|-P.south) -- ([xshift=2 * \AS + \AO]Z3.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{12}$}
+	node [midway, above=\AU pt] (P11) {};
+	
+% In Between A15 %
+\path
+  let \p0 = (Z3.east),
+      \p1 = (Z2.west),
+      \p2 = ($ (\p0)!.5!(\p1) + (0,-3.5) $)
+  in
+node [XOR] (A12) at (\p2) {};
+\draw [myline, name path=secondline] (A12|-P.south) -- (A12)
+	node[at start, above=\AP pt] {\scriptsize  P$_{5}$}
+	node [midway, above=\AM pt] (P12) {};	
+
+
+% Z2 %
+\draw [myarrow] ([xshift=-2 * \AS - \AO]Z2.north|-P.south) -- ([xshift=-2 * \AS - \AO]Z2.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{14}$}
+	node [midway, above=\AU pt] (P13) {};
+\path [half paths={dashed, myarrow}{solid, myarrow}] ([xshift=-1 * \AS - \AO]Z2.north|-P.south) -- ([xshift=-1 * \AS - \AO]Z2.north)
+	node [midway, above=\AU pt] (P14) {};
+\draw [myarrow] ([xshift=0 * \AS - \AO]Z2.north|-P.south) -- ([xshift=0 * \AS - \AO]Z2.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{16}$}
+	node [midway, above=\AU pt] (P15) {};
+\draw [myarrow] ([xshift=0 * \AS + \AO]Z2.north|-P.south) -- ([xshift=0 * \AS + \AO]Z2.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{17}$}
+	node [midway, above=\AU pt] (P16) {};
+\draw [myarrow] ([xshift=1 * \AS + \AO]Z2.north|-P.south) -- ([xshift=1 * \AS + \AO]Z2.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{18}$}
+	node [midway, above=\AU pt] (P17) {};
+\draw [myarrow] ([xshift=2 * \AS + \AO]Z2.north|-P.south) -- ([xshift=2 * \AS + \AO]Z2.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{19}$}
+	node [midway, above=\AU pt] (P18) {};
+	
+% In Between A19 %
+\path
+  let \p0 = (Z2.east),
+      \p1 = (Z1.west),
+      \p2 = ($ (\p0)!.5!(\p1) + (0,-3.5) $)
+  in
+node [XOR] (A19) at (\p2) {};
+
+\draw [myline] (A19|-P.south) -- (A19)
+	node[at start, above=\AP pt] {\scriptsize  P$_{20}$}
+	node [midway, above=\AM pt] (P19) {};	
+
+% Z1 %
+\draw [myarrow] ([xshift=-2 * \AS - \AO]Z1.north|-P.south) -- ([xshift=-2 * \AS - \AO]Z1.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{21}$}
+	node [midway, above=\AU pt] (P20) {};
+\draw [myarrow] ([xshift=-1 * \AS - \AO]Z1.north|-P.south) -- ([xshift=-1 * \AS - \AO]Z1.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{22}$}
+	node [midway, above=\AU pt] (P21) {};
+\draw [myarrow] ([xshift=0 * \AS - \AO]Z1.north|-P.south) -- ([xshift=0 * \AS - \AO]Z1.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{23}$}
+	node [midway, above=\AU pt] (P22) {};
+\path [half paths={dashed, myarrow}{solid, myarrow}] ([xshift=0 * \AS + \AO]Z1.north|-P.south) -- ([xshift=0 * \AS + \AO]Z1.north)
+	node [midway, above=\AU pt] (P23) {};
+\draw [myarrow] ([xshift=1 * \AS + \AO]Z1.north|-P.south) -- ([xshift=1 * \AS + \AO]Z1.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{25}$}
+	node [midway, above=\AU pt] (P24) {};
+\draw [myarrow] ([xshift=2 * \AS + \AO]Z1.north|-P.south) -- ([xshift=2 * \AS + \AO]Z1.north)
+	node[at start, above=\AP pt] {\scriptsize  P$_{26}$}
+	node [midway, above=\AU pt] (P25) {};
+
+	
+% In Between %
+%\draw [myarrow] ([xshift=40]Z1.north|-P.south) -- ([xshift=40]Z1.north)
+%	node[at start, above=\AP pt] {\scriptsize  P$_{26}$}
+%	node [midway, above=\AP pt] (P26) {};
+	
+%Calculate the space between Z2 and Z1 and add it to the right of Z1
+\path
+  let \p0 = (Z2.east),
+      \p1 = (Z1.west),
+      \p2 = (Z1.east),
+      \p3 = ( $ (\p0)!.5!(\p1) $),
+      \p4 = ( $ (\p3 ) -(\p0) $),
+      \p5 = ( $ (\p4) + (\p2) $ ),
+      \p6 = (  $ (\p5)  + (0, -3.5) $)
+  in
+node [XOR] (A26) at (\p6) {};
+
+\draw [myline] (A26|-P.south) -- (A26)
+	node[at start, above=\AP pt] {\scriptsize  P$_{27}$}
+	node [midway, above=\AM pt] (P26) {};
+
+\end{scope}
+
+%U labels
+\node[draw=none] at (P0) {\scriptsize  U$_{P_{1}}$};
+\node[draw=none] at (P1) {\scriptsize  U$_{P_{2}}$};
+\node[draw=none] at (P2) {\scriptsize  U$_{33}$};
+\node[draw=none] at (P3) {\scriptsize  U$_{P_{4}}$};
+\node[draw=none] at (P4) {\scriptsize  U$_{P_{5}}$};
+
+\node[draw=none] at (P5) {\scriptsize  U$_{P_{6}}$};
+
+\node[draw=none] at (P6) {\scriptsize  U$_{5}$};
+\node[draw=none] at (P7) {\scriptsize  U$_{P_{8}}$};
+\node[draw=none] at (P8) {\scriptsize  U$_{9}$};
+\node[draw=none] at (P9) {\scriptsize  U$_{P_{10}}$};
+\node[draw=none] at (P10) {\scriptsize  U$_{P_{11}}$};
+\node[draw=none] at (P11) {\scriptsize  U$_{P_{12}}$};
+
+\node[draw=none] at (P12) {\scriptsize  U$_{P_{13}}$};
+
+\node[draw=none] at (P13) {\scriptsize  U$_{P_{14}}$};
+\node[draw=none] at (P14) {\scriptsize  U$_{25}$};
+\node[draw=none] at (P15) {\scriptsize  U$_{P_{16}}$};
+\node[draw=none] at (P16) {\scriptsize  U$_{P_{17}}$};
+\node[draw=none] at (P17) {\scriptsize  U$_{P_{18}}$};
+\node[draw=none] at (P18) {\scriptsize  U$_{P_{19}}$};
+
+\node[draw=none] at (P19) {\scriptsize  U$_{P_{20}}$};
+
+\node[draw=none] at (P20) {\scriptsize  U$_{P_{21}}$};
+\node[draw=none] at (P21) {\scriptsize  U$_{P_{22}}$};
+\node[draw=none] at (P22) {\scriptsize  U$_{P_{23}}$};
+\node[draw=none] at (P23) {\scriptsize  U$_{29}$};
+\node[draw=none] at (P24) {\scriptsize  U$_{P_{25}}$};
+\node[draw=none] at (P25) {\scriptsize  U$_{P_{26}}$};
+
+\node[draw=none] at (P26) {\scriptsize  U$_{P_{27}}$};
+
+% XOR nodes south of the Z triangles %
+\path let \p0 = (Z4.south),\p1 = (A5)
+	in node [XOR] (ZC4) at (\x0,\y1) {};
+
+\path let \p0 = (Z3.south),\p1 = (A12)
+	in node [XOR] (ZC3) at (\x0,\y1) {};
+
+\path let \p0 = (Z2.south),\p1 = (A19)
+	in node [XOR] (ZC2) at (\x0,\y1) {};
+
+\path let \p0 = (Z1.south),\p1 = (A26)
+	in node [XOR] (ZC1) at (\x0,\y1) {};
+	
+% draw lines south of Z triangles %	
+\draw [myline] (ZC4)edge(Z4.south);
+\draw [myline] (ZC3)edge(Z3.south);
+\draw [myline] (ZC2)edge(Z2.south);
+\draw [myline] (ZC1)edge(Z1.south);
+
+% F line coordinates and line
+\path let \p0 = (S2),\p1 = (ZC4)
+	in node [] (FS) at (\x0,\y1) {F$_{n}$};
+\path let \p0 = (U.east),\p1 = (ZC1)
+	in node [] (FE) at (\x0,\y1) {};
+\draw [myline] (FS)--(FE);
+
+% S2 to T %
+\path let
+	\p0 = (S2),
+	\p1 = (Z4.west),
+	\p2 = ( $ (\p0)!0.5! (\p1) $)
+in node [draw, circle, inner sep=1pt, fill=black] (SC1) at (\x2,\y0) {};
+\path let
+	\p0 = (SC1),
+	\p1 = ($ (Z4.south)!0.5!(ZC4) $ )
+	%\p2 = ( $ (\p0)!0.5! (\p1) $)
+in node [] (SC2) at (\x0,\y1) {};
+\path let
+	\p0 = ($ (A12)!0.66!(ZC2) $ )
+in node [XOR] (SC3) at (\p0) {};
+
+\draw [myline] (SC1)-|(SC2.center);
+\draw [myline] (SC2.center)-|(SC3);
+%\draw [avoid intersection={secondline}{},avoid intersection offset=5.27pt] (SC2.center)-|(SC3);
+
+
+% T 0-8 %
+
+\path let \p0 = ($ (FS)!0.6!(ZC4) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T0N) at (\p0) {};
+\node [below=30pt of T0N] (T0S) {T1};
+
+\path let \p0 = ($ (ZC4)!0.33!(A5) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T1N) at (\p0) {};
+\node [below=30pt of T1N] (T1S) {T2};
+
+\path let \p0 = ($ (A5)!0.33!(ZC3) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T2N) at (\p0) {};
+\node [below=30pt of T2N] (T2S) {T3};
+
+\path let \p0 = ($ (ZC3)!0.33!(A12) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T3N) at (\p0) {};
+\node [below=30pt of T3N] (T3S) {T4};
+
+\path let \p0 = ($ (A12)!0.33!(ZC2) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T4N) at (\p0) {};
+\node [below=30pt of T4N] (T4S) {T5};
+
+\path let \p0 = ($ (ZC2)!0.33!(A19) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T5N) at (\p0) {};
+\node [below=30pt of T5N] (T5S) {T6};
+
+\path let \p0 = ($ (A19)!0.33!(ZC1) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T6N) at (\p0) {};
+\node [below=30pt of T6N] (T6S) {T7};
+
+\path let \p0 = ($ (ZC1)!0.33!(A26) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T7N) at (\p0) {};
+\node [below=30pt of T7N] (T7S) {T8};
+
+\path let \p0 = ($ (A26)!0.33!(FE) $) 
+	in node [draw, circle, inner sep=1pt, fill=black] (T8N) at (\p0) {};
+\node [below=30pt of T8N] (T8S) {T9};
+
+
+\draw [myarrow] (T0N) -- (T0S);
+\draw [myarrow] (T1N) -- (T1S);
+\draw [myarrow] (T2N) -- (T2S);
+\draw [myarrow] (T3N) -- (T3S);
+\draw [myarrow] (T4N) -- (T4S);
+\draw [myarrow] (T5N) -- (T5S);
+\draw [myarrow] (T6N) -- (T6S);
+\draw [myarrow] (T7N) -- (T7S);
+\draw [myarrow] (T8N) -- (T8S);
+  
+  
+\end{tikzpicture}

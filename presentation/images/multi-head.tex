@@ -1,0 +1,152 @@
+\begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+  
+\tikzset{
+    myarrow/.style={-{stealth}, thick},
+    myarrowdashed/.style={semithick, dashed},
+    myline/.style={semithick},
+    triangle/.style = {draw, regular polygon, regular polygon sides=3, inner sep=0pt, minimum height=130},
+    node rotated/.style = {rotate=180},
+    border rotated/.style = {shape border rotate=180},
+     pre/.style={<-,shorten <=1pt,>=stealth',semithick},
+     post/.style={->,shorten >=1pt,>=stealth',semithick}
+}
+
+ 
+%************************%
+%  Beginning of drawing  %
+%************************%
+
+
+\pgfmathsetmacro{\dist}{20}
+\pgfmathsetmacro{\shift}{4}
+\pgfmathsetmacro{\linearwidth}{38}
+\pgfmathsetmacro{\linearheight}{16}
+\pgfmathsetmacro{\attentionwidth}{128}
+\pgfmathsetmacro{\attentionheight}{32}
+
+
+\node[minimum height=16pt] (Q) {\(Q\)};
+\node[left=30pt of Q, minimum height=16pt] (K) {\(K\)};
+\node[right=30pt of Q, minimum height=16pt] (V) {\(V\)};
+
+
+%%% Anchors
+\node[above=\dist pt of Q] (linear-anchor-q) {$\circ$};
+\node[above=\dist pt of K] (linear-anchor-k) {$\circ$};
+\node[above=\dist pt of V] (linear-anchor-v) {$\circ$};
+
+
+%%% Layer -2
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, above right=2*\shift pt of linear-anchor-q.center, opacity=0.3, anchor=center
+] (linear-q-2) {};
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, above right=2*\shift pt of linear-anchor-k.center, opacity=0.3, anchor=center
+] (linear-k-2) {};
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, above right=2*\shift pt of linear-anchor-v.center, opacity=0.3, anchor=center
+] (linear-v-2) {};
+
+%%% Layer -1
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, above right=\shift pt of linear-anchor-q.center, opacity=0.6, anchor=center
+] (linear-q-1) {};
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, above right=\shift pt of linear-anchor-k.center, opacity=0.6, anchor=center
+] (linear-k-1) {};
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, above right=\shift pt of linear-anchor-v.center, opacity=0.6, anchor=center
+] (linear-v-1) {};
+
+%%% Layer -1
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, above right=0pt of linear-anchor-q.center, opacity=1.0, anchor=center
+] (linear-q) at (linear-anchor-q) {Linear};
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, opacity=1.0, anchor=center
+] (linear-k)  at (linear-anchor-k) {Linear};
+\node[
+  draw, minimum width=\linearwidth pt, minimum height=\linearheight pt, rounded corners, very thick, fill=transbackground, opacity=1.0, anchor=center
+] (linear-v)  at (linear-anchor-v) {Linear};
+
+
+\node[above=1.3*\dist pt of linear-q] (attention-anchor) {$\circ$};
+
+
+\node[
+  draw, minimum width=\attentionwidth pt, minimum height=\attentionheight pt, rounded corners, very thick, fill=transpurple, above right=2*\shift pt of attention-anchor.center, opacity=0.3, anchor=center
+] (attention-2) {};
+\node[
+  draw, minimum width=\attentionwidth pt, minimum height=\attentionheight pt, rounded corners, very thick, fill=transpurple, above right=\shift pt of attention-anchor.center, opacity=0.6, anchor=center
+] (attention-1) {};
+\node[
+  draw, minimum width=\attentionwidth pt, minimum height=\attentionheight pt, rounded corners, very thick, fill=transpurple, above right=0 pt of attention-anchor.center, opacity=1, anchor=center, align=center
+] (attention) {Scaled Dot-Product\\Attention};
+
+\node[
+  above=\dist pt of attention, draw, minimum width=1.2*\linearwidth pt, rounded corners, very thick, fill=transyellow, opacity=1, anchor=center, align=center
+] (concat) {Concat};
+
+\node[
+  above=\dist pt of concat, draw, minimum width=1.2*\linearwidth pt, rounded corners, very thick, fill=transgreen, opacity=1, anchor=center, align=center
+] (linear) {Linear};
+
+
+%%% ARROWS %%%
+
+%% Arrows vkq to linear
+\draw[myarrow] (V.north) -> (linear-v);
+\draw[myarrow] (K.north) -> (linear-k);
+\draw[myarrow] (Q.north) -> (linear-q);
+
+%% Arrows between linear and scaled-dot layer -2
+\draw[thick, opacity=0.3] (linear-v-2.north) -| (linear-v-2.north |- attention.south);
+\draw[thick, opacity=0.3] (linear-k-2.north) -| (linear-k-2.north |- attention.south);
+\draw[thick, opacity=0.3] (linear-q-2.north) -| (linear-q-2.north |- attention.south);
+
+%% Arrows between linear and scaled-dot layer -1
+\draw[thick, opacity=0.6] (linear-v-1.north) -| (linear-v-1.north |- attention.south);
+\draw[thick, opacity=0.6] (linear-k-1.north) -| (linear-k-1.north |- attention.south);
+\draw[thick, opacity=0.6] (linear-q-1.north) -| (linear-q-1.north |- attention.south);
+
+%% Arrows between linear and scaled-dot layer 0
+\draw[myarrow] (linear-v.north) -| (linear-v.north |- attention.south);
+\draw[myarrow] (linear-k.north) -| (linear-k.north |- attention.south);
+\draw[myarrow] (linear-q.north) -| (linear-q.north |- attention.south);
+
+
+%% Arrows between scaled-dot and concat
+\draw[myarrow, opacity=0.3] (attention-2.north) -| (attention-2.north |- concat.south);
+\draw[myarrow, opacity=0.6] (attention-1.north) -| (attention-1.north |- concat.south);
+\draw[myarrow, opacity=1.0] (attention.north) -| (attention.north |- concat.south);
+
+%% Arrow between concat and linear
+\draw[myarrow] (concat.north) -- (linear);
+
+%% Draw "Layer" indication
+
+\path let
+  \p1 = ($(attention.north)!0.7!(attention.south)$),
+  \p2 = ($(attention.east)!0.03!(attention.west)$),
+  in node[] at (\x2,\y1) (anchor-front) {};
+
+\path let
+  \p1 = ($(attention-2.north)!0.6!(attention-2.south)$),
+  \p2 = (attention-2.east),
+  in node[] at (\x2,\y1) (anchor-back) {};
+
+\path let
+  \p1 = ($(anchor-front)!0.5!(anchor-back)$),
+  in node[] at (\x1+3pt,\y1+0pt) (anchor-middle) {};
+
+\draw[thick] (anchor-front.center) to[out=320, in=220] (anchor-middle.center);
+\draw[thick] (anchor-middle.center) to[out=40, in=0] (anchor-back.center);
+
+\node[right=6pt of anchor-middle.center, inner sep=0] (encoder-count) {\(H_n\)};
+\draw[] (encoder-count.west) -- (anchor-middle.center);
+
+%******************%
+%  End of drawing  %
+%******************%
+
+\end{tikzpicture}

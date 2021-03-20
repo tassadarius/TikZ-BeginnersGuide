@@ -1,0 +1,43 @@
+
+\tikzset{partial ellipse/.style args =
+  {#1:#2:#3}{insert path={+ (#1:#3) arc (#1:#2:#3)}}}
+\begin{tikzpicture}[>=latex, scale=0.9, every node/.style={transform shape}]
+  %  ellipses
+  \draw [fill=white!90!red]    (3,-1.8) ellipse    (4cm and 1 cm);
+  \draw [fill=yellow!90!green] (3,-1.8) ellipse (3cm and 0.75 cm);
+  \draw [fill=white!90!green]  (3,-1.8) ellipse  (2cm and 0.5 cm);
+
+  % -- Soleil
+  \shade [ball color=gray!10!yellow] (3,-1.8) circle (1);
+  \node (soleil) at (3,-1.8) {\bf Soleil};
+  % partial ellipse pour tracé devant le Soleil
+  \draw (3,-1.8) [partial ellipse=220:320:2cm and 0.5cm]
+        (3,-1.8) [partial ellipse=220:320:3cm and 0.75cm];
+
+  % Venus
+  \shade [ball color=gray!10!orange] (1.6,-1.8) circle (.2);
+  \node (venus) at (1.5,-1.45) {Venus}; 
+
+  % ombre de Venus
+  \draw[color=white!70!black,fill=white!70!black]
+    (1.6,-2.3) ellipse (2mm and 0.5mm);
+
+  % Mercure
+  \shade [ball color=gray!10!orange] (5,-1.225) circle (.25);
+  \node (mercure) at (5,-0.8) {Mercure}; 
+
+  % Earth
+  \shade [ball color=white!50!blue] (5.75,-2.5) circle (.33);
+  \node (terre) at (6.6,-2.6) {\bf Terre};
+
+  % Lune
+  \shade [ball color=yellow] (5.25,-2.8) circle (.1);
+  \node (lune) at (5.25,-3) {Lune};
+     
+  % Mars
+  \draw (3,-1.8) [partial ellipse=45:120:9cm and 2.5cm];
+  \shade [ball color=black!50!red] (5,0.66) circle (.15);
+  \node (mars) at (5,1) {\bf Mars};   
+  % trajet
+  \draw [line width=2pt,blue,->,>=latex] (terre) to[out=0,in=0] (mars);   
+\end{tikzpicture}
