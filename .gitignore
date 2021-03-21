@@ -1,8 +1,8 @@
 *.aux
 *.log
 *.nav
-*.synctex.gz
-*.vrb
-*.toc
 *.snm
+*.synctex.gz
+*.toc
 *.out
+*.vrb
