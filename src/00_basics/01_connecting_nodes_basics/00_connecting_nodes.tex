@@ -1,0 +1,17 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\begin{document}
+\begin{tikzpicture}
+    \node[draw] (left0) at (0, 5) {left0};
+    \node[draw] (right0) at (3, 5) {right0};
+    \node[draw] (left1) at (0, 3) {left1};
+    \node[draw] (right1) at (3, 3) {right1};
+    \node[draw] (left2) at (0, 0) {left2};
+    \node[draw] (right2) at (3, 1.2) {right2};
+
+    \draw[->] (left0.east) -- (right0.west);
+    \draw[->] (left1.south) to[out=-50, in=230] (right1.south);
+    \draw[->] (left2.north) |- (right2.west);
+    \draw[->] (left2.east) -| (right2.south);
+    \draw[->] (right2.south west) -- (left2.north east);
+\end{tikzpicture}
+\end{document}

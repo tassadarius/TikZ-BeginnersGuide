@@ -1,0 +1,11 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\begin{document}
+\begin{tikzpicture}
+    \node[] (node0) {I exist};
+    \node[] (node1) at (1,2) {I exist at (1/2)};
+    \node[draw] (node2) at (3,1) {I have a border};
+    \node[draw, rounded corners] (node3) at (8,0.3) {with rounded corners};
+    \node[draw, minimum height=40pt] (node4) at (5, 3) {I have a minimum height};
+    \node[draw, rotate=45] (node5) at (9, 2) {I am rotated 45°};
+\end{tikzpicture}
+\end{document}

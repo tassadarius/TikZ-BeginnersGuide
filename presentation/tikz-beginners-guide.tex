@@ -84,6 +84,9 @@
 \usepackage{xspace}
 \usepackage{adjustbox} 
 
+\usepackage{listings}
+
+
 \newcommand{\tikzname}{Ti\textit{k}Z\xspace}
 
 % For bild_des-overview image
@@ -316,44 +319,46 @@ Cons
     \begin{itemize}
         \item Most \LaTeX distributions include \tikzname
         \item May require install on certain distributions
-        \subitem Miktek: Open Miktek Console \rightarrow Packages \rightarrow Install package tikz
-        \subitem Others: Please let google help you
+        \begin{enumerate}
+            \item Miktek: Open Miktek Console \(\rightarrow\) Packages \(\rightarrow\) Install package tikz
+            \item Others: Please let google help you
+        \end{enumerate}
         \item Online-Editors like Overleaf usually support out-of-the-box
     \end{itemize}
 \end{block}
 
 \begin{block}{Preamble}
-    \verbatim{\usepackage{tikz}}
-    \verbatim{\usetikzlibrary{tikz.positioning}}
+\begin{verbatim}
+\usepackage{tikz}
+\usetikzlibrary{tikz.positioning}
+\end{verbatim}
 \end{block}
 
 \end{frame}
 
 %------------------------------------------------
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Create a \tikzname image}
-\begin{columns}[l] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-
-\column{.45\textwidth} % Left column and width
+%
 \textbf{inline}
-\begin{lstlisting}
-    \begin{figure}
-        \begin{tikzpicture}[options]
-            ...
-        \end{tikzpicture}
-    \end{figure}
+\begin{lstlisting}[language=TeX]
+\begin{figure}
+  \begin{tikzpicture}[options]
+    ...
+  \end{tikzpicture}
+\end{figure}
 \end{lstlisting}
-
-\column{.45\textwidth} % Right column and width
-\begin{lstlisting}
-    \begin{figure}
-        \include{images/separate_image_tex_file}
-    \end{figure}
+\hrule
+\vspace{1em}
+\textbf{separate file}
+\begin{lstlisting}[language={TeX}]
+\begin{figure}
+  \include{images/separate_image_tex_file}
+\end{figure}
 \end{lstlisting}
-\end{columns}
 \end{frame}
-
+%
 %------------------------------------------------
 \section{Let's start}
 %------------------------------------------------
@@ -361,7 +366,7 @@ Cons
 \begin{frame}
     \frametitle{Let's start with nodes!}
 
-    Go to guide/00_basics/00_node_basics and open the tex file.
+    Go to guide/00\_basics/00\_node\_basics and open the tex file.
 
     Alternatively go to Overleaf and do the same
 
@@ -372,7 +377,7 @@ Cons
 \begin{frame}
     \frametitle{Another basic command: draw}
 
-    Go to guide/00_basics/01_draw_basics and open the tex file.
+    Go to guide/00\_basics/01\_draw\_basics and open the tex file.
 
     Alternatively go to Overleaf and do the same
 
@@ -383,7 +388,7 @@ Cons
 \begin{frame}
     \frametitle{Another basic command: draw}
 
-    Go to guide/00_basics/01_draw_basics and open the tex file.
+    Go to guide/00\_basics/01\_draw\_basics and open the tex file.
 
     Alternatively go to Overleaf and do the same
 

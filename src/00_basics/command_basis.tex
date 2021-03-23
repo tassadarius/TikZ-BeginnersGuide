@@ -1,0 +1,19 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{bm}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}
+    \node[] (command) {
+        \(
+            \underbrace{\bm{\setminus{}\textbf{command}}}_{\textrm{base command}} 
+            \underbrace{\textbf{[value, key=value, key=value]}}_{\textrm{arguments}}
+            \overbrace{\textbf{() \{\}}}^{\mathclap{\textrm{additional (command dependent) arguments}}}
+            \underbrace{\textbf{;}}_{\mathclap{\textrm{semicolon}}}
+        \)
+    };
+
+    \node [right=40pt of command.east] {};
+\end{tikzpicture}
+\end{document}

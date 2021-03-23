@@ -1,0 +1,12 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}
+    \node[draw, minimum width=40pt, minimum height=40pt] (anchor) {Anchor};
+
+    \node[draw, above=1.5cm of anchor] (above)  {I live 1.5cm above of anchor};
+    \node[draw, left=20pt of anchor.west] (left)  {I live 20pt left of anchor.west};
+    \node[draw, right=20pt of anchor.north east, anchor=north west] (right) {my top left point is 20pt away from anchor's top right};
+    \node[draw, below=1.5cm of anchor.center, anchor=center] (below)  {Our centers are 1.5cm apart};
+\end{tikzpicture}
+\end{document}
