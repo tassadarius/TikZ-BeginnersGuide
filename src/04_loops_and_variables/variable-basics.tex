@@ -1,0 +1,13 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usetikzlibrary{positioning, calc, shapes}
+\begin{document}
+\begin{tikzpicture}
+
+\pgfmathsetmacro{\H}{20}
+\pgfmathsetmacro{\W}{\H * 16}
+\pgfmathsetmacro{\mybluecolor}{"blue!30"}
+
+\node[draw, minimum height=\H pt, minimum width=\W pt, fill=\mybluecolor] {I have the height of \H{} and a width of 8 times that (\W)};
+
+\end{tikzpicture}
+\end{document}

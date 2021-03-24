@@ -1,0 +1,14 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usetikzlibrary{positioning, calc, shapes}
+\begin{document}
+\begin{tikzpicture}
+
+  \node[draw, minimum width=200pt] (top) {top};
+  \node[draw, minimum width=200pt, below=40pt of top] (bottom) {bottom};
+
+  \foreach \i in {0.1,0.2,...,0.9} {
+    \coordinate (p) at ($(top.south west)!\i!(top.south east)$);
+    \draw[->] (p) -- (bottom.north-|p);
+  }
+\end{tikzpicture}
+\end{document}
