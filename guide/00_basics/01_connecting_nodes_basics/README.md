@@ -4,25 +4,25 @@ To simply draw an/line arrow from `a` to `b`
 
 `\draw[->, line width=2pt] (a.east) -- (b.west);`
 
-![nodes](../../../src/00_basics/01_connecting_nodes_basics/simple-connect.svg)
+<img src="../../../src/00_basics/01_connecting_nodes_basics/simple-connect.svg" height="60">
 
 ___
 
 `\draw[<->, line width=2pt] (a.east) -- (b.west);`
 
-![nodes](../../../src/00_basics/01_connecting_nodes_basics/simple-connect_double.svg)
+<img src="../../../src/00_basics/01_connecting_nodes_basics/simple-connect_double.svg" height="60">
 
 ___
 
 `\draw[-, line width=2pt] (a.east) -- (b.west);`
 
-![nodes](../../../src/00_basics/01_connecting_nodes_basics/simple-connect_flat.svg)
+<img src="../../../src/00_basics/01_connecting_nodes_basics/simple-connect_flat.svg" height="60">
 
 ___
 
 `\draw[line width=2pt] (a.east) to[out=-30, in=150] (b.west);`
 
-![nodes](../../../src/00_basics/01_connecting_nodes_basics/simple-connect_curved.svg)
+<img src="../../../src/00_basics/01_connecting_nodes_basics/simple-connect_curved.svg" height="60">
 
 # Corners
 
@@ -34,13 +34,13 @@ or horizontal first, then vertical
 
 `\draw[line width=2pt, color=red] (a.east) -| (b.south);`
 
-![nodes](../../../src/00_basics/01_connecting_nodes_basics/simple-connect_corner.svg)
+<img src="../../../src/00_basics/01_connecting_nodes_basics/simple-connect_corner.svg" height="300">
 
 # Chain
 
 You can also simply chain arrows/lines
 
-![nodes](../../../src/00_basics/01_connecting_nodes_basics/simple-connect_chain.svg)
+<img src="../../../src/00_basics/01_connecting_nodes_basics/simple-connect_chain.svg" height="300">
 
 
 
