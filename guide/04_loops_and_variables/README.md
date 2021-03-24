@@ -12,7 +12,8 @@ In here we take a small look at what we can do (these examples are from the TikZ
 ```
 \foreach \x in {1,2,3,4,5} { \node[draw] at (\x, 0) {\x}; }
 ```
-![nodes](../../src/04_loops_and_variables/basic-loop.svg)
+
+<img src="../../src/04_loops_and_variables/basic-loop.svg" height="45">
 
 ___
 
@@ -43,7 +44,8 @@ like the arrows in this example.
   \draw[->] (p) -- (bottom.north-|p);
 }
 ```
-![nodes](../../src/04_loops_and_variables/arrow-loop.svg)
+
+<img src="../../src/04_loops_and_variables/arrow-loop.svg" height="180">
 
 
 # Variables
@@ -59,5 +61,5 @@ This is pretty versatile and I recommend using variables for distances/settings 
 \node[draw, minimum height=\H pt, minimum width=\W pt, fill=\mybluecolor] {I have the height of \H{} and a width of 8 times that (\W)};
 ```
 
-![nodes](../../src/04_loops_and_variables/variable-basics.svg)
+<img src="../../src/04_loops_and_variables/variable-basics.svg" height="50">
 
