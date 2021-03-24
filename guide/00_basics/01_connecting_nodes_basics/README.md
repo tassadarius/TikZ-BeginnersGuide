@@ -38,7 +38,11 @@ or horizontal first, then vertical
 
 # Chain
 
-You can also simply chain arrows/lines
+You can also simply chain arrows/lines. Given that the nodes exist use:
+
+``` 
+\draw[->, line width=1.5pt] (a) -- (b) -- (c) -- (d);
+```
 
 <img src="../../../src/00_basics/01_connecting_nodes_basics/simple-connect_chain.svg" height="300">
 
