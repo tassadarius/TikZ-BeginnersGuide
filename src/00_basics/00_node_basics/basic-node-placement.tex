@@ -1,0 +1,9 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}
+    \node[draw, minimum width=100pt, minimum height=30pt, fill=blue!10] (my-node) {my-node};
+
+    \node[draw, circle, fill=black, inner sep=3pt] (dot) at (my-node.north east) {} node [above=2pt of my-node.north east] {Dot at my-node's north east};
+\end{tikzpicture}
+\end{document}

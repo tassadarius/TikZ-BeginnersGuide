@@ -1,0 +1,8 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}
+    \node[] (my-node) {I am an arbitrary node text};
+    \node[draw] (placed-node) at (3, 3) {I am placed hard coded};
+\end{tikzpicture}
+\end{document}
