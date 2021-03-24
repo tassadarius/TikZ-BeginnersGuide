@@ -1,0 +1,18 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usepackage{booktabs}
+\usetikzlibrary{positioning, backgrounds}
+\begin{document}
+\begin{tikzpicture}[framed]
+    \node[draw, fill=gray!25, minimum width=100pt, text width=80pt, align=right] (aligned-text) {This text is aligned on the right and a maximum width is specified, which causes it to break.};
+
+    \node[draw, right=30pt of aligned-text] (table-text) {
+        \begin{tabular}{cc}
+            This & is a \\
+            \midrule
+            \LaTeX & tabular
+        \end{tabular}
+    };
+
+    \draw[<->] (aligned-text) -- (table-text);
+\end{tikzpicture}
+\end{document}

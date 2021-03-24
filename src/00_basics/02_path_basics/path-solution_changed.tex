@@ -1,0 +1,13 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usetikzlibrary{positioning, backgrounds, calc}
+\begin{document}
+\begin{tikzpicture}[framed]
+    \node[draw, inner sep=12pt, fill=blue!10] (a) {a};
+    \node[draw, inner sep=12pt, fill=red!10] (b) at (5, 1.4) {b};
+
+    \path let                          
+        \p1 = (a.north east),  
+        \p2 = (b.west),     
+        in node[draw, anchor=north west] (c) at (\x2,\y1) {c}; 
+\end{tikzpicture}
+\end{document}
