@@ -2,7 +2,7 @@
 
 The TikZ framework provides various commands for different tasks. Almost all share a common syntax base:
 
-[[../../src/00_basics/command_basis.svg | width=800px]]
+<img src="../../src/00_basics/command_basis.svg" height="40">
 
 * A command usually starts with a \ and its keyword. Some commands can be chained then the \ is omitted.
 * Arguments can be passed via the square brackets (some are only value, some key=value)
