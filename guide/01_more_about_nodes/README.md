@@ -14,6 +14,21 @@ out-of-the-box (like math or tables!). There are some things to look out for:
 
 Here you can see two examples
 
+```
+\node[draw, fill=gray!25, minimum width=100pt, text width=80pt, align=right] (aligned-text) {
+  This text is aligned on the right and a maximum width is specified, which causes it to break.};
+
+    \node[draw, right=30pt of aligned-text] (table-text) {
+        \begin{tabular}{cc}
+            This & is a \\
+            \midrule
+            \LaTeX & tabular
+        \end{tabular}
+    };
+
+    \draw[<->] (aligned-text) -- (table-text);
+```
+
 ![nodes](../../src/01_more_about_nodes/text-align.svg)
 
 
@@ -22,7 +37,7 @@ Here you can see two examples
 Sometimes you want to position (a node, an arrow start) between something at certain positions.
 For example you want to have to 2 dots between two nodes
 
-![nodes](../../src/01_more_about_nodes/position-between.svg)
+<img src="../../src/01_more_about_nodes/position-between.svg" height="100">
 
 (hint: requires `\usetikzlibrary{positioning, calc}` in your document preamble)
 
@@ -43,4 +58,4 @@ This can also be used for `arrows` or `path let`
         in node[draw, anchor=north west] (c) at (\x2,\y1) {c}; 
 ```
 
-![nodes](../../src/01_more_about_nodes/position-calc_showcase.svg)
+<img src="../../src/01_more_about_nodes/position-calc_showcase.svg" height="126">

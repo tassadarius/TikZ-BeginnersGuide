@@ -2,7 +2,7 @@
 
 Edges often have a labels which gives bonus information like `no`/`yes` in this case.
 
-![nodes](../../src/02_labelling_edges/labelling-edges_showcase.svg)
+<img src="../../src/02_labelling_edges/labelling-edges_showcase.svg" height="300">
 
 In TikZ this is quite easy by just appending a normal `node` to an arrow command.
 
