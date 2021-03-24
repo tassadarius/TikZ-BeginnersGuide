@@ -20,7 +20,6 @@
 | fill | any latex color | Fill the background with a latex color (use `fill=red!50` to scale brightness) |
 | color | any latex color | Color the text and border |
 
-
 # Anchors
 
 A node has anchors which can be used in many ways for connecting nodes or position them.  
@@ -51,3 +50,11 @@ Relative placement (recommended)
 | above left/below left/above right, below left | same as above | you get the idea |
 | anchor | anchor-point (west, east, etc) | which point of the new element should be taken as reference point |
 
+
+# Shapes
+
+(hint: requires `\usetikzlibrary{shapes}` in your document preamble)
+
+use `[shape=circle, isosceles triangle, star, tape, arrow, double arrow, etc]`
+
+Another useful parameter is `[inner sep=Xpt]` is set a minimum size!

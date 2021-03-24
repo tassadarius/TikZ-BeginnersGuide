@@ -1,0 +1,12 @@
+\documentclass[tikz, convert=pdf2svg]{standalone}
+\usetikzlibrary{positioning, backgrounds}
+\begin{document}
+\begin{tikzpicture}[framed]
+    \node[draw, fill=blue!10] (a) {a};
+    \node[draw, fill=red!10, above right=50pt of a] (b) {b};
+
+    \draw[line width=2pt, color=blue, rounded corners] (a.north) |- (b.west);
+    \draw[line width=2pt, color=red] (a.east) -| (b.south);
+
+\end{tikzpicture}
+\end{document}

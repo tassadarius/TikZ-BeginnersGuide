@@ -2,7 +2,10 @@
 \usetikzlibrary{positioning, backgrounds}
 \begin{document}
 \begin{tikzpicture}[framed]
-    \node[] (my-node) {I am an arbitrary node text};
-    \node[draw] (placed-node) at (3, 3) {I am placed hard coded};
+    \node[draw, fill=blue!10] (a) {a};
+    \node[draw, fill=red!10, right=50pt of a] (b) {b};
+
+    \draw[line width=2pt] (a.east) -- (b.west);
+
 \end{tikzpicture}
 \end{document}
