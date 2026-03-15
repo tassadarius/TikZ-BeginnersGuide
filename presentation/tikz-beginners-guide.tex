@@ -327,7 +327,7 @@ Cons
 %------------------------------------------------
 
 \begin{frame}[fragile]
-\frametitle{Setup ()}
+\frametitle{Setup}
 \begin{block}{\LaTeX environment}
     \begin{itemize}
         \item Most \LaTeX distributions include \tikzname
@@ -342,8 +342,8 @@ Cons
 
 \begin{block}{Preamble}
 \begin{verbatim}
-\usepackage{tikz}
-\usetikzlibrary{tikz.positioning}
+\usepackage{tikz}                  %% base package
+\usetikzlibrary{tikz.positioning}  %% library
 \end{verbatim}
 \end{block}
 
@@ -354,8 +354,13 @@ Cons
 \begin{frame}[fragile]
 \frametitle{Create a \tikzname image}
 %
-\textbf{inline}
-\begin{lstlisting}[language=TeX]
+\textbf{inline skeleton}
+\begin{lstlisting}[
+    language=TeX,
+    backgroundcolor = \color{lightgray!38},
+    xleftmargin = 0.5cm,
+    basicstyle=\small
+    ]
 \begin{figure}
   \begin{tikzpicture}[options]
     ...
@@ -364,16 +369,48 @@ Cons
 \end{lstlisting}
 \hrule
 \vspace{1em}
-\textbf{separate file}
-\begin{lstlisting}[language={TeX}]
+\textbf{separate file skeleton}
+\begin{lstlisting}[
+    language={TeX},
+    backgroundcolor = \color{lightgray!38},
+    xleftmargin = 0.5cm,
+    basicstyle=\small
+    ]
 \begin{figure}
   \include{images/separate_image_tex_file}
 \end{figure}
 \end{lstlisting}
 \end{frame}
 %
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+\frametitle{Resources}
+
+Useful resources and documentation for learning and looking up things
+
+%
+\begin{itemize}
+    \item \href{https://texdoc.org/serve/tikz/0}{PDF manual}
+    \item \href{https://tikz.dev/}{https://tikz.dev}
+\end{itemize}
+
+\end{frame}
+%
+
 %------------------------------------------------
 \section{Let's start - Workshop time}
+%------------------------------------------------
+
+
+\begin{frame}
+    \frametitle{Questions}
+
+    Any questions before we start with the workshop?
+
+\end{frame}
+
 %------------------------------------------------
 
 \begin{frame}
@@ -383,18 +420,6 @@ Cons
 
 \end{frame}
 
-%------------------------------------------------
-
-\section{Q & A}
-%------------------------------------------------
-
-\begin{frame}
-    \frametitle{Questions and answers}
-
-    if there are any
-
-
-\end{frame}
 
 %------------------------------------------------
 \end{document} 
