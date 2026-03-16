@@ -9,8 +9,9 @@ There is a small presentation, but the main focus is on the `guide` directory.
 1. [More about nodes](./guide/01_more_about_nodes/)
 1. [More about edges and arrows](./guide/02_labelling_edges/)
 1. [Draw a graph](./guide/03_graph_example/)
-1. [How to use libraries](./guide/04_loops_and_variables/)
+1. [Loops and variables](./guide/04_loops_and_variables/)
 1. [Annotate images](./guide/05_annotate_images/)
+1. [How to use libraries](./guide/06_libraries/)
 
 You can find a accompanying presentation about this introduction course [here](./presentation/README.md)
 
